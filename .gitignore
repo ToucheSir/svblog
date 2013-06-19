@@ -33,3 +33,13 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+# Uploads
+*.(txt|TXT)
+*.(png|PNG)
+*.(gif|GIF)
+*.(jpg|JPG)
+*.(jpeg|JPEG)
+
+# Other
+.DS_Store
