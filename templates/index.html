@@ -1,0 +1,36 @@
+<!doctype html>
+<!--MicroBlog - index.html
+    Author: James Gray
+	June 2013
+
+	This contains the basic html template for all pages in the
+	site - each other page inherits this via Jinja2.-->
+
+<title>flask demo</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',
+filename='style.css') }}">
+<div class="page">
+	<h1>flask demo <span id="subtitle">by James Gray</span></h1>
+	{% for message in get_flashed_messages() %}
+    	<div class="flash">{{ message }}</div>
+  	{% endfor %}
+	<div class="navigation">
+		{% if not session.logged_in %}
+			{% if request.path != "/create/" %}
+			<a href="{{ url_for('create') }}">create account</a> <br>
+			{% endif %}
+			{% if request.path != "/login/" %}
+			<a href="{{ url_for('login') }}">log in</a>
+			{% endif %}
+		{% else %}
+			<a href="{{ url_for('logout') }}">log out</a> <br>
+			{% if request.path != "/user/%s/files/" % session['logged_in'] %}
+			<a href="{{ url_for('files', name=session['logged_in']) }}">download files</a> <br>
+			{% endif %}
+			{% if request.path != "/user/%s/upload/" % session['logged_in'] %}
+			<a href="{{ url_for('upload', name=session['logged_in']) }}">upload file</a>
+			{% endif %}
+		{% endif %}
+	</div>
+	{% block body %}{% endblock %}
+</div>

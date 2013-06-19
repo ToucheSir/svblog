@@ -1,0 +1,20 @@
+<!--MicroBlog - files.html
+	Author: James Gray
+	June 2013
+
+	This will display all of a user's uploaded 
+	files in an unordered list.-->
+
+{% extends "index.html" %}
+{% block body %}
+	<h2>{{ username }}'s files</h2>
+	<ul class="files">
+	{% for f in uploads %}
+		{% if f.userid == session['logged_in'] %}
+			<li><a href=
+				"{{ url_for('uploaded_file', name=f.userid, 
+				filename=f.filename) }}">{{ f.filename }}</a>
+		{% endif %}
+	{% endfor %}
+	</ul>
+{% endblock %}

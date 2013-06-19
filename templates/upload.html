@@ -1,0 +1,16 @@
+<!--MicroBlog - upload.html
+	Author: James Gray
+	June 2013
+
+	This contains the forms required for a user 
+	to upload a new file.-->
+
+{% extends "index.html" %}
+{% block body %}
+	<h2>upload new file</h2>
+	<form action="{{ url_for('upload', name=session['logged_in']) }}" method="post" enctype="multipart/form-data">
+		<p>	<input type="file" name="file">
+			<input type="submit" value="Upload">
+		</p>
+	</form>
+{% endblock %}
