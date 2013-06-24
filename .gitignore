@@ -3,6 +3,9 @@
 # C extensions
 *.so
 
+# SQLAlchemy databases
+*.db
+
 # Packages
 *.egg
 *.egg-info
