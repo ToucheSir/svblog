@@ -1,29 +1,32 @@
-# MicroBlog - user.py
+# svblog - user.py
 # Author: James Gray
 # June 2013
 #
 # This file contains the User class, which
-# flask-demo uses to add and fetch user instances
-# to and from a user database.
+# flask-demo uses to create instances of user
+# objects to be added to the user database.
 
+from datetime import datetime
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from werkzeug import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = \
-    'sqlite://///Users/jamesgray/Desktop/Science Venture/microblog/data/users.db'
+    'sqlite://///Users/jamesgray/Desktop/Science Venture/svblog/data/users.db'
 
 # Create SQLAlchemy object for user database
 udb = SQLAlchemy(app)
 
 class User(udb.Model):
-	"""Creates a user object and stores in an SQLAlchemy database."""
+	"""Creates a user object."""
 
 	# Initialize columns
 	id = udb.Column(udb.Integer, primary_key=True)
 	name = udb.Column(udb.String(80), unique=True)
 	pw_hash = udb.Column(udb.String(160))
+	creation_date = udb.Column(udb.DateTime)
+	posting_enabled = udb.Column(udb.Boolean)
 
 	def __init__(self, username, password):
 		self.name = username
@@ -33,8 +36,11 @@ class User(udb.Model):
 		db_instance = User.query.filter_by(name=username).first()
 
 		if db_instance is None:
-			# Generate a hash for the given password.
+			# Generate a hash for the given password, set posting
+			# to be enabled, and set the account creation date.
 			self.__set_pw(password)
+			self.creation_date = datetime.now()
+			self.posting_enabled = True
 
 	def __set_pw(self, password):
 		"""

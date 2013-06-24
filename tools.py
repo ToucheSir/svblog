@@ -1,4 +1,4 @@
-# MicroBlog - tools.py
+# svblog - tools.py
 # Author: James Gray
 # June 2013
 #
@@ -8,7 +8,7 @@ from flask import session, flash
 from user import User
 from upload import Upload
 
-VALID_EXTENSIONS = ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif']
+VALID_EXTENSIONS = ['pdf', 'png', 'jpg', 'jpeg', 'gif']
 
 def get_user(username):
 	"""Query the user database for an instance of a given username."""
@@ -27,11 +27,12 @@ def valid_file(filename):
 
 def valid_user(name):
 	"""Redirects a user to the login page if they attempt to
-	access a page belonging to another user."""
+	load a page to which they do not have access."""
+
 	if 'logged_in' in session and session['logged_in'] == name:
 		error = None
 	elif get_user(name) is None:
-		error = "User %s does not exist." % name
+		error = "User does not exist."
 	else:
 		error = "Must be logged in as %s to access this page." % name
 

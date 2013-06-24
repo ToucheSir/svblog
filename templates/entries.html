@@ -1,0 +1,41 @@
+<!--svblog - entries.html
+	Author: James Gray
+	June 2013
+
+	This will display all of a user's blog posts
+	and uploaded files in an unordered list.-->
+
+{% extends "index.html" %}
+{% block body %}
+	{% if session.logged_in and session['logged_in'] == username %} 
+		{% if session.posting_enabled and session['posting_enabled'] == True %}
+		<form action="{{ url_for('entries', name=username) }}" method="post" class="add-entry">
+			<dl>
+				<dt>Title:
+				<dd><input type="text" size=30 name="title">
+				<dt>Text:
+				<dd><textarea name="text" rows=5 cols=40></textarea>
+				<dd><input type="submit" value="Share">
+			</dl>
+		</form>
+		{% endif %}
+	{% endif %}
+
+	<ul class="entries">
+	{% for e in entries %}
+		{% if e.userid == username %}
+			<li><h2>{{ e.title }}</h2>{{ e.text|safe }}
+		{% endif %}
+	{% endfor %}
+	</ul>
+	<ul class="entries">
+	<h2>{{ username }}'s pictures</h2>
+	{% for f in uploads %}
+		{% if f.userid == username %}
+			<li><img src=
+				"{{ url_for('uploaded_file', name=f.userid, 
+				filename=f.filename) }}">
+		{% endif %}
+	{% endfor %}
+	</ul>
+{% endblock %}
