@@ -11,7 +11,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = \
-	'sqlite://///Users/jamesgray/Desktop/Science Venture/svblog/data/uploads.db'
+	'sqlite://///home/edesign/svblog/data/uploads.db'
 
 # Create SQLAlchemy object for file database
 fdb = SQLAlchemy(app)

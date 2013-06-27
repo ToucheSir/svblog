@@ -6,20 +6,12 @@
 
 from flask import session, flash
 from user import User
-from upload import Upload
 
 VALID_EXTENSIONS = ['pdf', 'png', 'jpg', 'jpeg', 'gif']
 
 def get_user(username):
 	"""Query the user database for an instance of a given username."""
 	return User.query.filter_by(name=username).first()
-
-def has_file_access(username, filename):
-	"""Query the file database for an instance of a given filename to
-	determine access privileges."""
-	if Upload.query.filter_by(userid=username, filename=filename).first() is not None:
-		return True
-	return False
 
 def valid_file(filename):
 	"""Determines if a file contains an allowed extension."""

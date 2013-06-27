@@ -13,7 +13,7 @@ from werkzeug import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = \
-    'sqlite://///Users/jamesgray/Desktop/Science Venture/svblog/data/users.db'
+    'sqlite://///home/edesign/svblog/data/users.db'
 
 # Create SQLAlchemy object for user database
 udb = SQLAlchemy(app)
@@ -27,6 +27,7 @@ class User(udb.Model):
 	pw_hash = udb.Column(udb.String(160))
 	creation_date = udb.Column(udb.DateTime)
 	posting_enabled = udb.Column(udb.Boolean)
+	theme = udb.Column(udb.String(80))
 
 	def __init__(self, username, password):
 		self.name = username
@@ -41,6 +42,7 @@ class User(udb.Model):
 			self.__set_pw(password)
 			self.creation_date = datetime.now()
 			self.posting_enabled = True
+			self.theme = 'blue'
 
 	def __set_pw(self, password):
 		"""

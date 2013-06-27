@@ -5,19 +5,97 @@
 *  Contains style rules for all pages.
 */
 
-body            { font-family: 'Myriad Pro', sans-serif; background: #eee; }
-a, h1, h2       { color: #377ba8; }
-h1, h2          { margin: 0; }
-h1              { border-bottom: 2px solid #eee; }
-h2              { font-size: 1.2em; }
+body.blue { background: #cee5F5; }
+body.green { background: #cef6d4; }
+body.red { background: #ffa294; }
+body.orange { background: #FFc392; }
+body.white { background: #fff; }
+body.black { background: #000; }
 
-.page           { margin: 2em auto; width: 42em; border: 4px solid #ccc; padding: 0.8em; background: white; }
-.entries        { list-style: none; margin: 0.8em; padding: 0; border-bottom: 2px solid #eee; }
-.entries li     { margin: 0.8em 1.2em; }
-.entries li h2  { margin-left: -1em; }
-.add-entry      { font-size: 0.9em; border-bottom: 2px solid #eee; }
-.add-entry dl   { font-weight: bold; }
-.navigation     { text-align: right; font-size: 0.9em; padding: 0.3em; }
-.flash          { background: #cee5F5; padding: 0.5em; margin: 0.5em; }
+body { 
+    font-family: 'Myriad Pro', sans-serif; 
+}
 
-#subtitle       { color: #6AAED9; font-size: 0.6em; }
+a.blue, h1.blue, h2.blue, h4.blue { color: #377ba8; }
+a.green, h1.green, h2.green, h4.green { color: #37a87b; }
+a.red, h1.red, h2.red, h4.red { color: #a83737; }
+a.orange, h1.orange, h2.orange, h4.orange { color: #FF8C00; }
+a.white, h1.white, h2.white, h4.white { color: #000;}
+a.black, h1.black, h2.black, h4.black, p.black { color: #fff;}
+
+h1, h2 { 
+    margin: 0; 
+}
+
+h1 { 
+    border-bottom: 2px solid #eee; 
+}
+
+h2 { 
+    font-size: 1.2em; 
+}
+
+.page { 
+    margin: 2em auto; 
+    width: 42em; 
+    border: 4px solid #ccc; 
+    padding: 0.8em; 
+    background: white; 
+}
+
+.black .page { background: #222; }
+
+.entries { 
+    list-style: none; 
+    margin: 0.8em; 
+    padding: 0; 
+    border-bottom: 2px solid #eee; 
+}
+
+.black .entries { color: #fff; }
+
+.entries li { 
+    margin: 0.8em 1.2em; 
+}
+
+.entries li h2 { 
+    margin-left: -1em;
+}
+
+.add-entry { 
+    font-size: 0.9em; 
+    border-bottom: 2px solid #eee; 
+}
+
+.add-entry dl { 
+    font-weight: bold; 
+}
+
+.navigation { 
+    text-align: right; 
+    font-size: 0.9em; 
+    padding: 0.3em; 
+}
+
+.blue .flash { background: #cee5F5; }
+.green .flash { background: #cef6d4; }
+.red .flash { background: #ffa294; }
+.orange .flash { background: #ffc392;}
+.white .flash { background: #ddd; }
+.black .flash { background: #444; color: #fff;}
+
+.flash {
+    padding: 0.5em; 
+    margin: 0.5em; 
+}
+
+.blue .subtitle { color: #6aaed9; }
+.green .subtitle { color: #6adbae; }
+.red .subtitle { color: #db6a6a; }
+.orange .subtitle { color: #FFbf33;}
+.white .subtitle { color: #bbb; }
+.black .subtitle { color: #aaa; }
+
+.subtitle {
+    font-size: 0.6em; 
+}
