@@ -9,7 +9,6 @@ import os, re
 from datetime import datetime, timedelta
 from flask import Flask, request, session, redirect, \
     url_for, render_template, flash, send_from_directory
-from flask.ext.sqlalchemy import SQLAlchemy
 from werkzeug import secure_filename
 from tools import get_user, valid_file, valid_user, display
 from user import User, udb
