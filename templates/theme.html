@@ -1,0 +1,22 @@
+<!--svblog - theme.html
+    Author: James Gray
+    June 2013
+
+    This page displays options for a user to
+    customize their blog's appearance.-->
+
+{% extends "index.html" %}
+{% block body %}
+    <h2 class="{{ theme }}" >change the theme</h2>
+    <form action="{{ url_for('change_theme', name=username) }}" method="post">
+        <select name="theme">
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+            <option value="red">Red</option>
+            <option value="orange">Orange</option>
+            <option value="white">White</option>
+            <option value="black">Black</option>
+            <input type="submit" value="Save">
+        </select>
+    </form> 
+{% endblock %}

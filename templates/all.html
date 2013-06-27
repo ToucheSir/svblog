@@ -1,0 +1,22 @@
+<!--svblog - all.html
+    Author: James Gray
+    June 2013
+
+    This will display a master list of all registered
+    users to the site administrator.-->
+{% extends "index.html" %}
+{% block body %}
+    <h2 class="{{ theme }}">All users</h2>
+    {% for u in users %}
+        <p class="{{ theme }}">
+            <a class="{{ theme }}" href="/{{ u.name }}/">{{ u.name }}</a>:<br>
+            Date created: {{ u.creation_date }}<br>
+            Posting enabled: 
+            {% if u.posting_enabled == True %}
+                Yes
+            {% else %}
+                No
+            {% endif %}
+        </p>
+    {% endfor %}
+{% endblock %}
