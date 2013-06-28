@@ -11,7 +11,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = \
-	'sqlite://///home/edesign/svblog/data/uploads.db'
+    'sqlite://///home/edesign/svblog/data/uploads.db'
 
 # Create SQLAlchemy object for file database
 fdb = SQLAlchemy(app)
@@ -25,10 +25,12 @@ class Upload(fdb.Model):
 	id = fdb.Column(fdb.Integer, primary_key=True)
 	userid = fdb.Column(fdb.String(80))
 	filename = fdb.Column(fdb.String(160))
+	filetype = fdb.Column(fdb.String(80))
 
-	def __init__(self, username, filename):
+	def __init__(self, username, filename, filetype):
 		self.userid = username
 		self.filename = filename
+		self.filetype = filetype
 
 	def __repr__(self):
 		return '<File %r>' % self.filename

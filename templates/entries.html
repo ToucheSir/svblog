@@ -7,7 +7,7 @@
 
 {% extends "index.html" %}
 {% block body %}
-	{% if session.logged_in and session['logged_in'] == username %} 
+	{% if session.logged_in and session['logged_in'] == username %}
 		{% if session.posting_enabled and session['posting_enabled'] == True %}
 		<form class="{{ theme }} entries" action="{{ url_for('entries', name=username) }}" method="post" class="add-entry">
 			<dl>
@@ -29,12 +29,17 @@
 	{% endfor %}
 	</ul>
 	<ul class="entries">
-	<h2 class="{{ theme }}">{{ username }}'s pictures</h2>
+	<h2 class="{{ theme }}">{{ username }}'s files</h2>
 	{% for f in uploads %}
 		{% if f.userid == username %}
-			<li><img src=
-				"{{ url_for('uploaded_file', name=f.userid, 
-				filename=f.filename) }}">
+            {% if f.filetype == 'html' %}
+                <li><a class="{{ theme }}" href="{{ url_for('uploaded_file', name=f.userid,
+    			filename=f.filename) }}">{{ f.filename }}</a>
+            {% else %}
+			    <li><img src=
+				    "{{ url_for('uploaded_file', name=f.userid,
+				    filename=f.filename) }}">
+            {% endif %}
 		{% endif %}
 	{% endfor %}
 	</ul>

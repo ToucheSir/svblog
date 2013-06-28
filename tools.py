@@ -7,7 +7,7 @@
 from flask import session, flash
 from user import User
 
-VALID_EXTENSIONS = ['pdf', 'png', 'jpg', 'jpeg', 'gif']
+VALID_EXTENSIONS = ['pdf', 'png', 'jpg', 'jpeg', 'gif', 'html', 'css']
 
 def get_user(username):
 	"""Query the user database for an instance of a given username."""
