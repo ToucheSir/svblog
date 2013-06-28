@@ -141,7 +141,7 @@ def entries(name):
         session['theme'] = get_user(name).theme
         entries = [e for e in Entry.query.all()]
         entries.reverse()
-        uploads = [dict(userid=f.userid, filename=f.filename) \
+        uploads = [dict(userid=f.userid, filename=f.filename, filetype=f.filetype) \
             for f in Upload.query.all()]
 
         if request.method == "POST":
@@ -184,8 +184,9 @@ def upload(name):
                 # Sanitize the filename, save the file to the uploads
                 # folder, and add the file and owner info to the file database.
                 filename = secure_filename(file.filename)
+                filetype = filename.rsplit('.', 1)[1].lower()
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                file_instance = Upload(name, filename)
+                file_instance = Upload(name, filename, filetype)
 
                 # Insert the upload object into the database.
                 fdb.session.add(file_instance)
