@@ -1,5 +1,5 @@
 <!--svblog - entries.html
-	Author: James Gray
+    Author: James Gray
 	June 2013
 
 	This will display all of a user's blog posts
@@ -25,11 +25,10 @@
 	{% for e in entries %}
 		{% if e.userid == username %}
 			<li><h2 class="{{ theme }}">{{ e.title }}</h2>{{ e.text|safe }}
-            {% if session['logged_in'] == username %}
-                <a class="del" href="{{ url_for('delete_file', name=session['logged_in'],
-                filename=f.filename) }}">delete</a>
+		    {% if session['logged_in'] == username %}
+                <a class="{{ theme }} del" href="{{ url_for('delete_entry', name=session['logged_in'], id=e.id) }}">delete</a>
             {% endif %}
-		{% endif %}
+        {% endif %}</h2>
 	{% endfor %}
 	</ul>
 	<ul class="entries">
@@ -45,7 +44,7 @@
 				    filename=f.filename) }}">
             {% endif %}
             {% if session['logged_in'] == username %}
-                <a class="del" href="{{ url_for('delete_file', name=session['logged_in'],
+                <a class="{{ theme }} del" href="{{ url_for('delete_file', name=session['logged_in'],
                 filename=f.filename) }}">delete</a>
             {% endif %}
 		{% endif %}
