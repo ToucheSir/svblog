@@ -12,8 +12,8 @@ body.orange { background: #FFc392; }
 body.white { background: #fff; }
 body.black { background: #000; }
 
-body { 
-    font-family: 'Myriad Pro', sans-serif; 
+body {
+    font-family: 'Myriad Pro', sans-serif;
 }
 
 a.blue, h1.blue, h2.blue, h4.blue { color: #377ba8; }
@@ -23,58 +23,63 @@ a.orange, h1.orange, h2.orange, h4.orange { color: #FF8C00; }
 a.white, h1.white, h2.white, h4.white { color: #000;}
 a.black, h1.black, h2.black, h4.black, p.black { color: #fff;}
 
-h1, h2 { 
-    margin: 0; 
+h1, h2 {
+    margin: 0;
 }
 
-h1 { 
-    border-bottom: 2px solid #eee; 
+h1 {
+    border-bottom: 2px solid #eee;
 }
 
-h2 { 
-    font-size: 1.2em; 
+h2 {
+    font-size: 1.2em;
 }
 
-.page { 
-    margin: 2em auto; 
-    width: 42em; 
-    border: 4px solid #ccc; 
-    padding: 0.8em; 
-    background: white; 
+img {
+    max-width: 38em;
+    height: auto;
+}
+
+.page {
+    margin: 2em auto;
+    width: 42em;
+    border: 4px solid #ccc;
+    padding: 0.8em;
+    background: white;
 }
 
 .black .page { background: #222; }
 
-.entries { 
-    list-style: none; 
-    margin: 0.8em; 
-    padding: 0; 
-    border-bottom: 2px solid #eee; 
+.entries {
+    list-style: none;
+    margin: 0.8em;
+    padding: 0;
+    border-bottom: 2px solid #eee;
 }
 
 .black .entries { color: #fff; }
 
-.entries li { 
-    margin: 0.8em 1.2em; 
+.entries li {
+    margin: 0.8em 1.2em;
 }
 
-.entries li h2 { 
+.entries li h2 {
     margin-left: -1em;
 }
 
-.add-entry { 
-    font-size: 0.9em; 
-    border-bottom: 2px solid #eee; 
+.add-entry {
+    font-size: 0.9em;
+    border-bottom: 2px solid #eee;
 }
 
-.add-entry dl { 
-    font-weight: bold; 
+.add-entry dl {
+    font-weight: bold;
 }
 
-.navigation { 
-    text-align: right; 
-    font-size: 0.9em; 
-    padding: 0.3em; 
+.navigation {
+    text-align: right;
+    font-size: 0.9em;
+    padding: 0.3em;
 }
 
 .blue .flash { background: #cee5F5; }
@@ -85,8 +90,8 @@ h2 {
 .black .flash { background: #444; color: #fff;}
 
 .flash {
-    padding: 0.5em; 
-    margin: 0.5em; 
+    padding: 0.5em;
+    margin: 0.5em;
 }
 
 .blue .subtitle { color: #6aaed9; }
@@ -97,5 +102,5 @@ h2 {
 .black .subtitle { color: #aaa; }
 
 .subtitle {
-    font-size: 0.6em; 
+    font-size: 0.6em;
 }

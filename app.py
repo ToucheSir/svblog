@@ -185,6 +185,10 @@ def upload(name):
                 # folder, and add the file and owner info to the file database.
                 filename = secure_filename(file.filename)
                 filetype = filename.rsplit('.', 1)[1].lower()
+                x = 0
+                while os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER'], filename)):
+                    x += 1
+                    filename = ("%s(%s)" % filename, x)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 file_instance = Upload(name, filename, filetype)
 
@@ -203,6 +207,39 @@ def upload(name):
     display(error)
     if 'logged_in' in session:
         return redirect(url_for('upload', name=session['logged_in']))
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/<name>/<filename>/delete/')
+def delete_file(name, filename):
+    """
+    This page will delete a file from the database.
+    """
+
+    error = valid_user(name)
+    if error is None:
+        if request.method == 'POST':
+            file = Upload.query.filter_by(filename=filename).first()
+            if file and file.userid == name:
+                """Delete the file from the upload folder if it exists."""
+                filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                if os.path.isfile(filepath)
+                    os.remove(filepath)
+
+                # Delete the upload object from the database.
+                fdb.session.delete(file_instance)
+                fdb.session.commit()
+
+                flash('File was deleted successfully.')
+                return redirect(url_for('entries', name=name))
+            else:
+                error = "Specified file does not exist."
+
+    # If an error occurs, display the error and
+    # redirect to the appropriate page.
+    display(error)
+    if 'logged_in' in session:
+        return redirect(url_for('entries', name=session['logged_in']))
     else:
         return redirect(url_for('login'))
 
