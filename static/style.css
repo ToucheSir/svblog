@@ -35,6 +35,12 @@ h2 {
     font-size: 1.2em;
 }
 
+a.del {
+    font-size: 60%;
+    font-style: normal;
+    margin-left: 5px;
+}
+
 img {
     max-width: 38em;
     height: auto;

@@ -183,12 +183,18 @@ def upload(name):
             if file and valid_file(file.filename):
                 # Sanitize the filename, save the file to the uploads
                 # folder, and add the file and owner info to the file database.
-                filename = secure_filename(file.filename)
+                old_filename = filename = secure_filename(file.filename)
                 filetype = filename.rsplit('.', 1)[1].lower()
+
+                # Prevents duplicate filenames by appending (1), (2), etc.
+                # e.g. if two "images.jpg" are uploaded, the second one would
+                # become "images(1).jpg".
                 x = 0
                 while os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER'], filename)):
                     x += 1
-                    filename = ("%s(%s)" % filename, x)
+                    filename = ("%s(%s).%s" % (old_filename.rsplit('.', 1)[0], x, filetype))
+
+                # Save the file to the uploads folder.
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 file_instance = Upload(name, filename, filetype)
 
@@ -210,30 +216,60 @@ def upload(name):
     else:
         return redirect(url_for('login'))
 
-@app.route('/<name>/<filename>/delete/')
-def delete_file(name, filename):
+@app.route('/<name>/delete/post_<id>')
+def delete_entry(name, id):
     """
-    This page will delete a file from the database.
+    This page will delete an entry from the database.
     """
 
+    # Check if the user is logged in before allowing to delete files.
     error = valid_user(name)
     if error is None:
-        if request.method == 'POST':
-            file = Upload.query.filter_by(filename=filename).first()
-            if file and file.userid == name:
-                """Delete the file from the upload folder if it exists."""
-                filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                if os.path.isfile(filepath)
-                    os.remove(filepath)
+        entry_instance = Entry.query.filter_by(id=id, userid=name).first()
+        if entry_instance and entry_instance.userid == name:
+            # Delete the entry from the database if it exists.
 
-                # Delete the upload object from the database.
-                fdb.session.delete(file_instance)
-                fdb.session.commit()
+            edb.session.delete(entry_instance)
+            edb.session.commit()
 
-                flash('File was deleted successfully.')
-                return redirect(url_for('entries', name=name))
-            else:
-                error = "Specified file does not exist."
+            flash('Entry was deleted successfully.')
+            return redirect(url_for('entries', name=name))
+        else:
+            error = "Specified entry does not exist."
+
+    # If an error occurs, display the error and
+    # redirect to the appropriate page.
+    display(error)
+    if 'logged_in' in session:
+        return redirect(url_for('entries', name=session['logged_in']))
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/<name>/delete/<filename>', methods=['GET', 'POST'])
+def delete_file(name, filename):
+    """
+    This page will delete a file from the database and uploads folder.
+    """
+
+    # Check if the user is logged in before allowing to delete files.
+    error = valid_user(name)
+    if error is None:
+        file = Upload.query.filter_by(filename=filename).first()
+        if file and file.userid == name:
+            # Delete the file from the upload folder if it exists.
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            if os.path.isfile(filepath):
+                os.remove(filepath)
+
+            # Delete the upload object from the database.
+            fdb.session.delete(file)
+            fdb.session.commit()
+
+            flash('File was deleted successfully.')
+            return redirect(url_for('entries', name=name))
+        else:
+            error = "Specified file does not exist."
 
     # If an error occurs, display the error and
     # redirect to the appropriate page.
