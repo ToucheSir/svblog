@@ -25,6 +25,10 @@
 	{% for e in entries %}
 		{% if e.userid == username %}
 			<li><h2 class="{{ theme }}">{{ e.title }}</h2>{{ e.text|safe }}
+            {% if session['logged_in'] == username %}
+                <a class="del" href="{{ url_for('delete_file', name=session['logged_in'],
+                filename=f.filename) }}">delete</a>
+            {% endif %}
 		{% endif %}
 	{% endfor %}
 	</ul>
@@ -39,6 +43,10 @@
 			    <li><img src=
 				    "{{ url_for('uploaded_file', name=f.userid,
 				    filename=f.filename) }}">
+            {% endif %}
+            {% if session['logged_in'] == username %}
+                <a class="del" href="{{ url_for('delete_file', name=session['logged_in'],
+                filename=f.filename) }}">delete</a>
             {% endif %}
 		{% endif %}
 	{% endfor %}
