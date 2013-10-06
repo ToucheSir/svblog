@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 from flask import Flask, request, session, redirect, \
     url_for, render_template, flash, send_from_directory
 from werkzeug import secure_filename
-from tools import get_user, valid_file, valid_user, display
+from tools import urlify, get_user, valid_file, valid_user, display
 from user import User, udb
 from upload import Upload, fdb
 from entry import Entry, edb
@@ -57,16 +57,6 @@ def login():
         elif not user_instance.check_pw(request.form['password']):
             error = 'Invalid password.'
         else:
-            # After 5 days, disable posting and uploading for the user.
-            # This is so that the campers' blogs act as snapshots
-            # of their week at camp, and to prevent the posting or
-            # uploading of questionable content to their camp-affiliated
-            # blog.
-            current_date = datetime.now()
-            if current_date >= user_instance.creation_date + timedelta(days=5):
-                user_instance.posting_enabled = False
-                udb.session.commit()
-
             session['logged_in'], session['posting_enabled'], session['theme'] = \
                 username, user_instance.posting_enabled, user_instance.theme
             flash('Successfully logged in.')
@@ -146,6 +136,7 @@ def entries(name):
 
         if request.method == "POST":
             title, text = request.form['title'], request.form['text']
+            text = urlify(text)
 
             entry_instance = Entry(name, title, text)
             edb.session.add(entry_instance)
@@ -228,7 +219,6 @@ def delete_entry(name, id):
         entry_instance = Entry.query.filter_by(id=id, userid=name).first()
         if entry_instance and entry_instance.userid == name:
             # Delete the entry from the database if it exists.
-
             edb.session.delete(entry_instance)
             edb.session.commit()
 
