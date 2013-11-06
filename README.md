@@ -7,7 +7,7 @@ Use the following directory structure when deploying:
 
     svblog/
         data/
-            (generated .db files)
+            (.db files)
         uploads/
             (image files)
         static/
