@@ -5,11 +5,12 @@
 # This file contains the main Flask
 # application logic for the project.
 
-import os, re
+import os
+import re
 from datetime import datetime, timedelta
 from flask import Flask, request, session, redirect, \
     url_for, render_template, flash, send_from_directory
-from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 from tools import urlify, get_user, valid_file, valid_user, display
 from user import User, udb
 from upload import Upload, fdb
@@ -18,6 +19,7 @@ from entry import Entry, edb
 app = Flask(__name__)
 app.config.from_pyfile('settings.cfg')
 
+
 def init_db():
     """
     Create the initial user, file and entry database tables.
@@ -25,6 +27,7 @@ def init_db():
     udb.create_all()
     fdb.create_all()
     edb.create_all()
+
 
 @app.after_request
 def after_request(response):
@@ -35,6 +38,7 @@ def after_request(response):
     """
     response.headers['Cache-Control'] = 'private, max-age=0'
     return response
+
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
@@ -67,9 +71,11 @@ def login():
     display(error)
     return render_template('login.html', theme=session['theme'])
 
+
 @app.route('/')
 def index():
     return redirect(url_for('login'))
+
 
 @app.route('/logout/')
 def logout():
@@ -82,6 +88,7 @@ def logout():
     flash('Successfully logged out.')
     return redirect(url_for('login'))
 
+
 @app.route('/create/', methods=['GET', 'POST'])
 def create():
     """
@@ -93,7 +100,7 @@ def create():
 
     if request.method == 'POST':
         # Get submitted values from fields.
-        username, password  = request.form['username'], request.form['password-a']
+        username, password = request.form['username'], request.form['password-a']
 
         # Check if there is a user by the same username in the database.
         user_instance = get_user(username)
@@ -120,6 +127,7 @@ def create():
     display(error)
     return render_template('create.html', theme=session['theme'])
 
+
 @app.route('/<name>/', methods=['GET', 'POST'])
 def entries(name):
     """
@@ -132,7 +140,7 @@ def entries(name):
         entries = [e for e in Entry.query.all()]
         entries.reverse()
         uploads = [dict(userid=f.userid, filename=f.filename, filetype=f.filetype) \
-            for f in Upload.query.all()]
+                   for f in Upload.query.all()]
 
         if request.method == "POST":
             title, text = request.form['title'], request.form['text']
@@ -146,10 +154,11 @@ def entries(name):
             return redirect(url_for('entries', name=name))
         else:
             return render_template('entries.html', username=name, \
-                uploads=uploads, entries=entries, theme=session['theme'])
+                                   uploads=uploads, entries=entries, theme=session['theme'])
     else:
         display("User does not exist.")
         return redirect(url_for('login'))
+
 
 @app.route('/<name>/upload/', methods=['GET', 'POST'])
 def upload(name):
@@ -206,6 +215,7 @@ def upload(name):
         return redirect(url_for('upload', name=session['logged_in']))
     else:
         return redirect(url_for('login'))
+
 
 @app.route('/<name>/delete/post_<id>')
 def delete_entry(name, id):
@@ -269,12 +279,14 @@ def delete_file(name, filename):
     else:
         return redirect(url_for('login'))
 
+
 @app.route('/<name>/<filename>')
 def uploaded_file(name, filename):
     """
     This page will fetch a given file from the uploads folder.
     """
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
 
 @app.route('/<name>/theme/', methods=['GET', 'POST'])
 def change_theme(name):
@@ -307,6 +319,7 @@ def change_theme(name):
     else:
         return redirect(url_for('login'))
 
+
 @app.route('/<name>/all/')
 def view_users(name):
     """
@@ -321,6 +334,7 @@ def view_users(name):
         error = "Must be logged in as the administrator to access this page."
         display(error)
         return redirect(url_for('login'))
+
 
 if __name__ == "__main__":
     init_db()

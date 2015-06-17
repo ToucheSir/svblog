@@ -7,47 +7,59 @@
 
 {% extends "index.html" %}
 {% block body %}
-	{% if session.logged_in and session['logged_in'] == username %}
-		{% if session.posting_enabled and session['posting_enabled'] == True %}
-		<form class="{{ theme }} entries" action="{{ url_for('entries', name=username) }}" method="post" class="add-entry">
-			<dl>
-				<dt>Title:
-				<dd><input type="text" size=30 name="title">
-				<dt>Text:
-				<dd><textarea name="text" rows=5 cols=40></textarea>
-				<dd><input type="submit" value="Share">
-			</dl>
-		</form>
-		{% endif %}
-	{% endif %}
+    {% if session.logged_in and session['logged_in'] == username %}
+        {% if session.posting_enabled and session['posting_enabled'] == True %}
+            <form class="{{ theme }} entries add-entry" action="{{ url_for('entries', name=username) }}" method="post">
+                <div>
+                    <label for="post-title">Title:</label>
+                    <input type="text" size=30 name="title" id="post-title">
+                </div>
+                <div>
+                    <label for="post-text">Text:</label>
+                    <textarea name="text" id="post-text" rows=5 cols=40></textarea>
+                    <div id="foobar"></div>
+                </div>
+                <input type="submit" value="Share">
+            </form>
 
-	<ul class="{{ theme }} entries">
-	{% for e in entries %}
-		{% if e.userid == username %}
-			<li><h2 class="{{ theme }}">{{ e.title }}</h2>{{ e.text|safe }}
-		    {% if session['logged_in'] == username %}
-                <a class="{{ theme }} del" href="{{ url_for('delete_entry', name=session['logged_in'], id=e.id) }}">delete</a>
+            <script src="{{ url_for('static', filename="quill.min.js") }}"></script>
+            <link rel="stylesheet" href="{{ url_for('static', filename="quill.snow.css") }}">
+            <script>
+                var editor = new Quill('#foobar');
+            </script>
+        {% endif %}
+    {% endif %}
+
+    <ul class="{{ theme }} entries">
+        {% for e in entries %}
+            {% if e.userid == username %}
+                <li>
+                    <h2 class="{{ theme }}">{{ e.title }}</h2>{{ e.text|safe }}
+                    {% if session['logged_in'] == username %}
+                        <a class="{{ theme }} del"
+                           href="{{ url_for('delete_entry', name=session['logged_in'], id=e.id) }}">delete</a>
+                    {% endif %}
+                </li>
             {% endif %}
-        {% endif %}</h2>
-	{% endfor %}
-	</ul>
-	<ul class="entries">
-	<h2 class="{{ theme }}">{{ username }}'s files</h2>
-	{% for f in uploads %}
-		{% if f.userid == username %}
-            {% if f.filetype in ['html', 'css'] %}
-                <li><a class="{{ theme }}" href="{{ url_for('uploaded_file', name=f.userid,
+        {% endfor %}
+    </ul>
+    <ul class="entries">
+        <h2 class="{{ theme }}">{{ username }}'s files</h2>
+        {% for f in uploads %}
+            {% if f.userid == username %}
+                {% if f.filetype in ['html', 'css'] %}
+                    <li><a class="{{ theme }}" href="{{ url_for('uploaded_file', name=f.userid,
     			filename=f.filename) }}">{{ f.filename }}</a>
-            {% else %}
-			    <li><img src=
-				    "{{ url_for('uploaded_file', name=f.userid,
+                        {% else %}
+                    <li><img src=
+                                     "{{ url_for('uploaded_file', name=f.userid,
 				    filename=f.filename) }}">
-            {% endif %}
-            {% if session['logged_in'] == username %}
-                <a class="{{ theme }} del" href="{{ url_for('delete_file', name=session['logged_in'],
+                {% endif %}
+                {% if session['logged_in'] == username %}
+                    <a class="{{ theme }} del" href="{{ url_for('delete_file', name=session['logged_in'],
                 filename=f.filename) }}">delete</a>
+                {% endif %}
             {% endif %}
-		{% endif %}
-	{% endfor %}
-	</ul>
+        {% endfor %}
+    </ul>
 {% endblock %}

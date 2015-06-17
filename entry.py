@@ -10,8 +10,8 @@ from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = \
-    'sqlite://///home/edesign/svblog/data/entries.db'
+DATABASE_URI = 'sqlite://///home/brianc/projects/svblog/data/users.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 
 # Create SQLAlchemy object for file database
 edb = SQLAlchemy(app)

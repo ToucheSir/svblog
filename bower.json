@@ -1,0 +1,19 @@
+{
+  "name": "svblog",
+  "version": "0.0.1",
+  "homepage": "https://github.com/ToucheSir/svblog",
+  "authors": [
+    "brianc <thehbc@uvic.ca>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "quill": "~0.19.14"
+  }
+}
