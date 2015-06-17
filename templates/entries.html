@@ -35,7 +35,7 @@
 	<h2 class="{{ theme }}">{{ username }}'s files</h2>
 	{% for f in uploads %}
 		{% if f.userid == username %}
-            {% if f.filetype == 'html' %}
+            {% if f.filetype in ['html', 'css'] %}
                 <li><a class="{{ theme }}" href="{{ url_for('uploaded_file', name=f.userid,
     			filename=f.filename) }}">{{ f.filename }}</a>
             {% else %}
