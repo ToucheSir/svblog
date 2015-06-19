@@ -113,3 +113,51 @@ img {
 }
 
 .link { color: blue; }
+
+#post-body {
+    -webkit-box-shadow: 0 0 10px #ccc;
+    -moz-box-shadow: 0 0 10px #ccc;
+    box-shadow: 0 0 10px #ccc;
+
+    border: 1px solid #ccc;
+}
+
+#post-title {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#post-title .input-label {
+    display: block;
+    padding: 5px 15px;
+    max-width: 100%;
+}
+
+#post-title .editor-input {
+    display: block;
+    line-height: 2em;
+    /*border-top: 1px solid #ccc;*/
+    /*border-left: none;*/
+
+    /*border-radius: 0;*/
+    border: 0 none;
+    background: #fff none;
+
+    /*-webkit-box-shadow: 0 0 10px #ccc;*/
+    /*-moz-box-shadow: 0 0 10px #ccc;*/
+    /*box-shadow: 0 0 10px #ccc;*/
+
+    /*padding: 0;*/
+    width: 100%;
+}
+
+#post-text .toolbar {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+
+    padding: 5px 15px;
+}
+
+#post-text .editor {
+}

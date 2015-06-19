@@ -14,6 +14,7 @@
     "tests"
   ],
   "dependencies": {
-    "quill": "~0.19.14"
+    "quill": "~0.19.14",
+    "zepto": "~1.1.6"
   }
 }

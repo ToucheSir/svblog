@@ -1,6 +1,6 @@
 <!--svblog - entries.html
-    Author: James Gray
-	June 2013
+    Author: Brian Chen (Attribution James Gray 2013)
+	June 2015
 
 	This will display all of a user's blog posts
 	and uploaded files in an unordered list.-->
@@ -10,23 +10,30 @@
     {% if session.logged_in and session['logged_in'] == username %}
         {% if session.posting_enabled and session['posting_enabled'] == True %}
             <form class="{{ theme }} entries add-entry" action="{{ url_for('entries', name=username) }}" method="post">
-                <div>
-                    <label for="post-title">Title:</label>
-                    <input type="text" size=30 name="title" id="post-title">
-                </div>
-                <div>
+                <div id="post-body">
+                    <div id="post-title">
+                        <label class="input-label" for="post-title-input">Title</label>
+                        <input type="text" size=30 name="title" class="editor-input" id="post-title-input">
+                    </div>
+                    {#                <div>
                     <label for="post-text">Text:</label>
                     <textarea name="text" id="post-text" rows=5 cols=40></textarea>
-                    <div id="foobar"></div>
-                </div>
-                <input type="submit" value="Share">
-            </form>
+                </div>#}
 
-            <script src="{{ url_for('static', filename="quill.min.js") }}"></script>
-            <link rel="stylesheet" href="{{ url_for('static', filename="quill.snow.css") }}">
-            <script>
-                var editor = new Quill('#foobar');
-            </script>
+                    <div id="post-text">
+                        <div class="toolbar" id="post-text-toolbar">
+
+                            <div class="ql-format-group">
+                                <span class="ql-format-button ql-bold"></span>
+                                <span class="ql-format-button ql-italic"></span>
+                            </div>
+                        </div>
+                        <div class="editor" id="post-text-editor"></div>
+                    </div>
+
+                    <input type="submit" value="Share">
+                </div>
+            </form>
         {% endif %}
     {% endif %}
 
@@ -62,4 +69,8 @@
             {% endif %}
         {% endfor %}
     </ul>
+
+    <script src="{{ url_for('static', filename="js/libs/quill.min.js") }}"></script>
+    <script src="{{ url_for('static', filename="js/libs/zepto.min.js") }}"></script>
+    <script src="{{ url_for('static', filename="js/app-compiled.js") }}"></script>
 {% endblock %}

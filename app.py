@@ -153,7 +153,7 @@ def entries(name):
             flash('Post successful!')
             return redirect(url_for('entries', name=name))
         else:
-            return render_template('entries.html', username=name, \
+            return render_template('entries.html', username=name,
                                    uploads=uploads, entries=entries, theme=session['theme'])
     else:
         display("User does not exist.")

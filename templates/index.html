@@ -6,41 +6,47 @@
 	This contains the basic html template for all pages in the
 	site - each other page inherits this via Jinja2.-->
 
-<title>svblog</title>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="style.css") }}">
+<html>
+<head>
+    <title>svblog</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="styles/style.css") }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename="styles/quill.snow.css") }}">
+</head>
 <body class="{{ theme }}">
 <div class="{{ theme }} page">
-	{% if request.path == "/login/" or request.path == "/create/" %}
-		<h1 class="{{ theme }}">svblog <span class="{{ theme }} subtitle">@ScienceVenture</span></h1>
-	{% else %}
-		<h1 class="{{ theme }}">{{ username }}'s blog <span class="{{ theme }} subtitle">@ScienceVenture</span></h1>
-	{% endif %}
+    {% if request.path == "/login/" or request.path == "/create/" %}
+        <h1 class="{{ theme }}">svblog <span class="{{ theme }} subtitle">@ScienceVenture</span></h1>
+    {% else %}
+        <h1 class="{{ theme }}">{{ username }}'s blog <span class="{{ theme }} subtitle">@ScienceVenture</span></h1>
+    {% endif %}
 
-	{% for message in get_flashed_messages() %}
-    	<div class="{{ theme }} flash">{{ message }}</div>
-  	{% endfor %}
+    {% for message in get_flashed_messages() %}
+        <div class="{{ theme }} flash">{{ message }}</div>
+    {% endfor %}
 
-	<div class="navigation">
-		{% if not session.logged_in %}
-			{% if request.path != "/create/" %}
-				<a class="{{ theme }}" href="{{ url_for('create') }}">create account</a> <br>
-			{% endif %}
-			{% if request.path != "/login/" %}
-				<a class="{{ theme }}" href="{{ url_for('login') }}">log in</a>
-			{% endif %}
-		{% else %}
-				<a class="{{ theme }}" href="{{ url_for('logout') }}">log out</a> <br>
-			{% if request.path != "/%s/" % session['logged_in'] %}
-				<a class="{{ theme }}" href="{{ url_for('entries', name=session['logged_in']) }}">view my blog</a> <br>
-			{% endif %}
-			{% if request.path != "/%s/upload/" % session['logged_in'] and session['posting_enabled'] == True %}
-				<a class="{{ theme }}" href="{{ url_for('upload', name=session['logged_in']) }}">upload file</a> <br>
-			{% endif %}
-			{% if request.path != "/%s/theme/" % session['logged_in'] %}
-				<a class="{{ theme }}" href="{{ url_for('change_theme', name=session['logged_in']) }}">change theme</a>
-			{% endif %}
-		{% endif %}
-	</div>
-	{% block body %}{% endblock %}
+    <div class="navigation">
+        {% if not session.logged_in %}
+            {% if request.path != "/create/" %}
+                <a class="{{ theme }}" href="{{ url_for('create') }}">create account</a> <br>
+            {% endif %}
+            {% if request.path != "/login/" %}
+                <a class="{{ theme }}" href="{{ url_for('login') }}">log in</a>
+            {% endif %}
+        {% else %}
+            <a class="{{ theme }}" href="{{ url_for('logout') }}">log out</a> <br>
+            {% if request.path != "/%s/" % session['logged_in'] %}
+                <a class="{{ theme }}" href="{{ url_for('entries', name=session['logged_in']) }}">view my blog</a> <br>
+            {% endif %}
+            {% if request.path != "/%s/upload/" % session['logged_in'] and session['posting_enabled'] == True %}
+                <a class="{{ theme }}" href="{{ url_for('upload', name=session['logged_in']) }}">upload file</a> <br>
+            {% endif %}
+            {% if request.path != "/%s/theme/" % session['logged_in'] %}
+                <a class="{{ theme }}" href="{{ url_for('change_theme', name=session['logged_in']) }}">change theme</a>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    {% block body %}{% endblock %}
 </div>
 </body>
+</html>
